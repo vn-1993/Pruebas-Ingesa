@@ -270,7 +270,7 @@
   .v6b-zone-center{order:3;flex:1 1 100%;justify-content:center}
   .v6b-zone-right{order:4;flex:1 1 100%;justify-content:center}
   .v6b-pill .tb-music{min-width:0}
-  .v6b-pill .tb-mname{max-width:80px}
+  .v6b-pill .tb-mname{max-width:110px}
 }
 @media (max-width:640px){
   .v6b-header-wrap{padding:8px 8px 4px}
@@ -1771,7 +1771,7 @@ const MusicBar = ({ user }) => {
   useEffect(()=>{ const a=audioRef.current; if(!a) return; const onEnd=()=>{ if(mode==='local') nextTrack(); }; const onTime=()=>{ setProgress(a.currentTime||0); setDur(a.duration||0); }; a.addEventListener('ended',onEnd); a.addEventListener('timeupdate',onTime); return ()=>{ a.removeEventListener('ended',onEnd); a.removeEventListener('timeupdate',onTime); }; });
   useEffect(()=>{ if('mediaSession' in navigator){ try{ navigator.mediaSession.setActionHandler('play', ()=>{ audioRef.current && audioRef.current.play(); }); navigator.mediaSession.setActionHandler('pause', ()=>{ audioRef.current && audioRef.current.pause(); }); navigator.mediaSession.setActionHandler('previoustrack', prevTrack); navigator.mediaSession.setActionHandler('nexttrack', nextTrack); }catch(e){} } });
   useEffect(()=>{ if(mode==='local' && files[idx] && 'mediaSession' in navigator){ try{ navigator.mediaSession.metadata=new MediaMetadata({ title: files[idx].name.replace(/\.[^.]+$/,''), artist:'Música local · INGESA', album:'Archivos del dispositivo' }); }catch(e){} } }, [idx, files]);
-  const curName = mode==='radio' ? (station?station.name:'Radio') : (files[idx]?files[idx].name.replace(/\.[^.]+$/,''):'Sin música');
+  const curName = mode==='radio' ? (station?station.name:'Radio') : (files[idx]?files[idx].name.replace(/\.[^.]+$/,''):'Música');
   const addStation = () => { if(!newStName.trim() || !newStUrl.trim()) return; const st={ name:newStName.trim(), url:newStUrl.trim(), logo:newStLogo.trim(), city:'Agregada', genre:'', verified:false }; const next=[...stations, st]; setStations(next); try{ localStorage.setItem('ingesa_radio_custom', JSON.stringify(next.filter(s=>!s.verified))); }catch(e){} setNewStName(''); setNewStUrl(''); setNewStLogo(''); };
   useEffect(()=>{ try{ const c=JSON.parse(localStorage.getItem('ingesa_radio_custom')||'[]'); if(c.length) setStations(prev=>[...prev, ...c]); }catch(e){} }, []);
   return (
