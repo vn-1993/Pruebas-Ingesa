@@ -212,12 +212,15 @@
 .v6b-header-wrap::after{display:none}
 .v6b-pill{display:flex;align-items:center;gap:10px;
   padding:10px 12px;border-radius:999px;
-  background:linear-gradient(135deg, rgba(255,255,255,.92), rgba(255,228,239,.92) 45%, rgba(255,209,227,.94));
-  -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  background:linear-gradient(135deg, rgba(255,255,255,.97), rgba(255,228,239,.97) 45%, rgba(255,209,227,.98));
+  /* Sin backdrop-filter: el blur convertía la píldora en containing-block y recortaba los modales fixed (calendario) */
   border:1px solid rgba(255,255,255,.85);
   box-shadow:0 18px 45px -12px rgba(230,43,112,.45), 0 4px 14px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.9);
   color:#3b1024}
 .v6b-zone{display:flex;align-items:center;gap:8px;min-width:0}
+.v6b-pill .tb-clockwrap{min-width:0;flex-shrink:1}
+.v6b-pill .tb-clock,.v6b-pill .tb-wx{flex-shrink:1;min-width:0}
+.v6b-pill .tb-time{white-space:nowrap}
 .v6b-zone-left{flex:1 1 0;justify-content:flex-start}
 .v6b-zone-center{flex:0 0 auto;justify-content:center}
 .v6b-zone-right{flex:1 1 0;justify-content:flex-end}
@@ -261,6 +264,14 @@
 .v6b-dock-item:active{transform:scale(.96)}
 .v6b-dock-emoji{font-size:18px}
 @keyframes v6b-pop{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (max-width:760px){
+  .v6b-pill{flex-wrap:wrap;row-gap:8px}
+  .v6b-zone-left{flex:1 1 0;min-width:0}
+  .v6b-zone-center{order:3;flex:1 1 100%;justify-content:center}
+  .v6b-zone-right{order:4;flex:1 1 100%;justify-content:center}
+  .v6b-pill .tb-music{min-width:0}
+  .v6b-pill .tb-mname{max-width:80px}
+}
 @media (max-width:640px){
   .v6b-header-wrap{padding:8px 8px 4px}
   .v6b-pill{gap:6px;padding:8px 10px;border-radius:26px}
@@ -2152,6 +2163,7 @@ const InstallPWAOverlay = ({ installEvent, onFinish }) => {
     >
       {phase === 'idle' && (
         <>
+          <button onClick={onFinish} aria-label="Cerrar" title="Cerrar" style={{ position: 'absolute', top: 16, right: 16, width: 44, height: 44, borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', background: 'rgba(255,255,255,.10)', color: '#fff', fontSize: 22, cursor: 'pointer' }}>✕</button>
           <div className="text-center mb-9" style={{ maxWidth: 360 }}>
             <div className="mb-6" style={{ fontSize: 78, lineHeight: 1, filter: 'drop-shadow(0 10px 28px rgba(230,43,112,.55))' }}>📲</div>
             <h2 className="text-3xl font-black mb-3" style={{ letterSpacing: '-.02em' }}>Instala INGESA</h2>
@@ -2173,6 +2185,13 @@ const InstallPWAOverlay = ({ installEvent, onFinish }) => {
             }}
           >
             📲 INSTALAR AHORA
+          </button>
+          <button
+            onClick={onFinish}
+            className="mt-4 w-full py-3 rounded-2xl text-sm font-black"
+            style={{ maxWidth: 380, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.25)', color: '#fff', cursor: 'pointer' }}
+          >
+            Ahora no, seguir en el navegador
           </button>
           <p className="mt-6 text-[11px] font-bold text-center" style={{ opacity: .45, maxWidth: 320 }}>
             La instalación toma solo unos segundos y es necesaria para usar INGESA correctamente.

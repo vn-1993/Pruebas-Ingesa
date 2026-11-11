@@ -2074,6 +2074,7 @@ const InstallPWAOverlay = ({ installEvent, onFinish }) => {
     >
       {phase === 'idle' && (
         <>
+          <button onClick={onFinish} aria-label="Cerrar" title="Cerrar" style={{ position: 'absolute', top: 16, right: 16, width: 44, height: 44, borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', background: 'rgba(255,255,255,.10)', color: '#fff', fontSize: 22, cursor: 'pointer' }}>✕</button>
           <div className="text-center mb-9" style={{ maxWidth: 360 }}>
             <div className="mb-6" style={{ fontSize: 78, lineHeight: 1, filter: 'drop-shadow(0 10px 28px rgba(230,43,112,.55))' }}>📲</div>
             <h2 className="text-3xl font-black mb-3" style={{ letterSpacing: '-.02em' }}>Instala INGESA</h2>
@@ -2095,6 +2096,13 @@ const InstallPWAOverlay = ({ installEvent, onFinish }) => {
             }}
           >
             📲 INSTALAR AHORA
+          </button>
+          <button
+            onClick={onFinish}
+            className="mt-4 w-full py-3 rounded-2xl text-sm font-black"
+            style={{ maxWidth: 380, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.25)', color: '#fff', cursor: 'pointer' }}
+          >
+            Ahora no, seguir en el navegador
           </button>
           <p className="mt-6 text-[11px] font-bold text-center" style={{ opacity: .45, maxWidth: 320 }}>
             La instalación toma solo unos segundos y es necesaria para usar INGESA correctamente.
